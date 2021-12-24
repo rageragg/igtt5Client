@@ -1,5 +1,6 @@
 export interface IMainMenu {
   id: number,
   title: string,
-  link: string
+  link: string,
+  show?: boolean;
 }

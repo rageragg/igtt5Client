@@ -21,8 +21,7 @@ export class NavbAuthComponent implements OnInit, OnDestroy, OnChanges {
     {  id: 2, title: 'Dashboard', link: '/auth/dashboard', show: true },
     {  id: 3, title: 'Login', link: '/auth/login', show: true },
     {  id: 4, title: 'Logout', link: '/auth/logout', show: true },
-    {  id: 5, title: 'Registro', link: '/auth/register', show: true },
-    {  id: 6, title: 'Usuarios', link: '/auth/user', show: true }
+    {  id: 5, title: 'Registro', link: '/auth/register', show: true }
   ];
 
   constructor( ) { }
@@ -34,7 +33,6 @@ export class NavbAuthComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-      console.log(changes);
 
       this._listMainMenu.forEach( x => {
         if(x.title === 'Dashboard' || x.title === 'Logout' ) {
@@ -43,10 +41,6 @@ export class NavbAuthComponent implements OnInit, OnDestroy, OnChanges {
 
         if(x.title === 'Login' ) {
           x.show = (this.userName === '');
-        }
-
-        if(x.title === 'Usuarios' || x.title === 'Registro' ) {
-          x.show = (this.userRol === 'ADMINISTRATOR');
         }
 
       });

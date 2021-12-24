@@ -12,6 +12,8 @@ import { AuthService } from '../../services/auth.service';
 })
 export class LoginComponent implements OnInit {
 
+  private _showmsg: boolean = false;
+
   myFormLogin: FormGroup = this.fb.group({
     email: [ '', [ Validators.required, Validators.email ] ],
     password: [ '', [Validators.required, Validators.minLength(6) ] ]
@@ -33,15 +35,18 @@ export class LoginComponent implements OnInit {
   login(): void {
 
     const { email, password } = this.myFormLogin.value;
+    this._showmsg = true;
 
     // validamos el email
     if( this.validatorEmail(email) === false ) {
       Swal.fire( 'Error', 'La direccion Email es incorrecta', 'error' );
+      this._showmsg = false;
       return;
     }
 
     this.authService.login( email, password )
       .subscribe( resp => {
+        this._showmsg = false;
         if( resp === 'OK' ) {
           this.router.navigateByUrl('/home');
         } else {
@@ -49,6 +54,10 @@ export class LoginComponent implements OnInit {
         }
       });
 
+  }
+
+  get showmsg(): boolean {
+    return this._showmsg;
   }
 
 }

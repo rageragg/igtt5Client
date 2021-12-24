@@ -1,5 +1,7 @@
 <div class="container">
-  <app-navb-home></app-navb-home>
+  <app-navb-home [userName]="user.name"
+                 [userRol]="user.rol">
+  </app-navb-home>
   <app-carousel-home></app-carousel-home>
   <app-footerl-home></app-footerl-home>
 </div>

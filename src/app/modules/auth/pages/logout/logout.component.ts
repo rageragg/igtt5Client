@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
+
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-logout',
@@ -7,9 +11,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LogoutComponent implements OnInit {
 
-  constructor() { }
+  constructor( private router: Router,
+               private authService: AuthService
+             ) { }
 
   ngOnInit(): void {
+  }
+
+  logout(): void {
+    this.authService.logout();
+    Swal.fire( 'Aviso', 'Se ha desconectado de la aplicacion', 'info' );
+    this.router.navigateByUrl('/home');
   }
 
 }

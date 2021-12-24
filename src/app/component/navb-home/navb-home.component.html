@@ -41,6 +41,10 @@
             <li><a class="dropdown-item" href="#">Empleados</a></li>
           </ul>
         </li>
+        <li class="nav-item"
+            *ngIf="userName">
+            <span class="nav-link text-primary">{{ userName }}</span>
+    </li>
       </ul>
     </div>
 

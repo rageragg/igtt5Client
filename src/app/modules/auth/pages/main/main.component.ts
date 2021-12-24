@@ -25,7 +25,6 @@ export class MainComponent implements OnInit {
     if(this.authService.token) {
       this.authService.apiToken( this.authService.token )
         .subscribe( resp => {
-          console.log(resp);
           if( resp != 'OK' ) {
             this.router.navigateByUrl('/auth/login');
           }
