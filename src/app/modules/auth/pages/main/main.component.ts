@@ -11,7 +11,7 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.css']
 })
-export class MainComponent implements OnInit {
+export class MainComponent implements OnInit, OnDestroy {
 
   private _user!: IUser;
   private _userServiceSubscription: Subscription | undefined;

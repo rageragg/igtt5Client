@@ -1,60 +1,120 @@
-import {AfterViewInit, Component, ViewChild, OnInit} from '@angular/core';
+import { Component, ViewChild, OnInit, AfterViewInit, AfterViewChecked, OnDestroy } from '@angular/core';
 
-import {MatPaginator} from '@angular/material/paginator';
-import {MatSort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatDialog } from '@angular/material/dialog';
+import { merge } from 'rxjs';
+import { catchError, map, startWith, switchMap } from "rxjs/operators";
 
-import { IUser } from 'src/app/modules/auth/interfaces/iuser.interface';
+import { UserService } from '../../../services/user.service';
+
+import { UserAddComponent } from '../user-add/user-add.component';
+import { userData } from '../../../interfaces/iuser-admin.interface';
+
 
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.css']
 })
-export class UserListComponent implements OnInit, AfterViewInit {
-
-  private _userList: IUser[] = [
-    { id: 1, name: 'Ronald Guerra', email: 'rageragg2004@gmail.com', valid: 'Y', rol: 'ADMINISTRATOR' },
-    { id: 2, name: 'Yaneth Guedez', email: 'yguedez2004@gmail.com', valid: 'Y', rol: 'LOGISTIC' }
-  ];
+export class UserListComponent implements OnInit, AfterViewInit, AfterViewChecked, OnDestroy {
 
   private _displayedColumns: string[] = ['id', 'name', 'email', 'rol', 'valid', 'actions'];
-  public dataSource!: MatTableDataSource<IUser>;
+  private _dataSource!: MatTableDataSource<userData>;
+  private _userdata: userData[] = [];
+  public loading: boolean = true;
+  public lengthData: number = 0;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-
-  get userList(): IUser[] {
-    return [...this._userList];
-  }
 
   get displayedColumns(): string[] {
     return [...this._displayedColumns];
   }
 
-  constructor() {
-    this.dataSource = new MatTableDataSource(this.userList);
-   }
-
-  ngOnInit(): void {
+  get dataSource() {
+    return this._dataSource;
   }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+  constructor( private userService: UserService,
+               public dialog: MatDialog
+             ) {
+    this._dataSource = new MatTableDataSource(this._userdata);
+  }
+
+  ngAfterViewChecked(): void {
+  }
+
+  ngAfterViewInit(): void {
+
+    this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
+    if( this.paginator ) {
+      this._dataSource.paginator = this.paginator;
+    }
+    this._dataSource.sort = this.sort;
+
+  }
+
+  ngOnInit(): void {
+    this.refreshData();
+  }
+
+  refreshData() {
+
+    this.userService
+        .allUsers()
+        .pipe(
+            map( ( { data } ) => {
+                this.loading = true;
+                this._userdata = [];
+                data.forEach( element => {
+                    const user: userData = {
+                        id: element.id,
+                        name: element.attributes.name,
+                        email: element.attributes.email,
+                        rol: element.attributes.rol,
+                        uuid: element.attributes.uuid,
+                        createdAt: element.attributes.createdAt,
+                        updatedAt: element.attributes.updatedAt,
+                        valid: element.attributes.valid,
+                        apiToken: element.attributes.apiToken,
+                        password:element.attributes.password,
+                        emailVerifiedAt: element.attributes.emailVerifiedAt
+                    }
+                    this._userdata.push(user);
+                });
+                return this._userdata;
+            })
+        )
+        .subscribe(resp => {
+          this._userdata = resp;
+          this.lengthData = this._userdata.length;
+          this._dataSource.data = this._userdata;
+        });
+
   }
 
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
 
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+    const filterValue = (event.target as HTMLInputElement).value;
+    this._dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this._dataSource.paginator) {
+      this._dataSource.paginator.firstPage();
     }
+
   }
 
   newUser(): void {
-    console.log('NewUser');
+    const dialogRef = this.dialog.open(UserAddComponent);
+
+    dialogRef.afterClosed().subscribe( result => {
+      if(result === true) {
+        this.refreshData();
+      };
+    });
+
   }
 
   editUser( id: number ): void {
@@ -69,4 +129,12 @@ export class UserListComponent implements OnInit, AfterViewInit {
     console.log('inforUser ', id );
   }
 
+  hideLoader() {
+    this.loading = false;
+  }
+
+  ngOnDestroy(): void {
+  }
+
 }
+

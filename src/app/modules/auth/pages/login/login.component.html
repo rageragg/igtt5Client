@@ -1,35 +1,41 @@
 <h3 class="text-primary mt-1">Iniciar Sesion (Login)</h3>
 <hr>
-<div class="login-form">
-  <form autocomplete="off"
+<mat-card>
+  <mat-card-title color="primary">Login</mat-card-title>
+  <mat-card-conten>
+    <form autocomplete="off"
         [formGroup]="myFormLogin"
         (ngSubmit)="login()">
-      <h2 class="text-center">Login</h2>
-      <div class="form-group">
+        <mat-form-field>
           <input type="email"
-                 class="form-control"
+                 matInput
                  formControlName="email"
                  placeholder="Ingrese su email">
-      </div>
-      <div class="form-group mt-1">
+        </mat-form-field>
+        <mat-form-field>
           <input type="password"
-                 class="form-control"
-                 formControlName="password"
-                 placeholder="Ingrese su contraseña">
-      </div>
-      <div class="d-grid gap-2 mt-3">
-          <button type="submit"
-                  class="btn btn-primary"
-                  [disabled]="!myFormLogin.valid">
-                  Log in
-          </button>
-      </div>
-  </form>
-  <p class="text-center"><a href="#">Registrarse</a></p>
-</div>
+                  matInput
+                  formControlName="password"
+                  placeholder="Ingrese su clave">
+        </mat-form-field>
 
-<div class="alert alert-info"
+        <div class="button">
+          <button type="submit"
+                  color="primary"
+                  mat-raised-button
+                  [disabled]="!myFormLogin.valid">
+            Login
+          </button>
+        </div>
+    </form>
+  </mat-card-conten>
+</mat-card>
+
+<div class="alert alert-info mt-2"
      role="alert"
      *ngIf="showmsg">
-  Conectando...!
+    <mat-progress-bar
+          [mode]="'indeterminate'">
+    </mat-progress-bar>
+    Conectando...!
 </div>

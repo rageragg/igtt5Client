@@ -10,3 +10,33 @@ table {
 td, th {
   width: 25%;
 }
+
+.user-list-container {
+  position: relative;
+}
+
+.user-list-table-container {
+  position: relative;
+  min-height: 200px;
+  max-height: 400px;
+  overflow: auto;
+}
+
+table {
+  width: 100%;
+}
+
+.user-list-search {
+  padding: 5px;
+}
+
+tr:hover td {
+  border-color: currentColor;
+  background-color: lightblue;
+}
+
+tr {
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  cursor: pointer;
+}

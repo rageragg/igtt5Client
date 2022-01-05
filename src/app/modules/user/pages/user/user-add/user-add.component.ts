@@ -1,20 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from 'src/app/modules/auth/services/auth.service';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  selector: 'app-user-add',
+  templateUrl: './user-add.component.html',
+  styleUrls: ['./user-add.component.css']
 })
-export class RegisterComponent implements OnInit {
+export class UserAddComponent implements OnInit {
 
   private _showmsg: boolean = false;
 
-  myFormRegister: FormGroup = this.fb.group({
+  myFormUserAdd: FormGroup = this.fb.group({
     email: [ '', [ Validators.required, Validators.email ] ],
     password: [ '', [Validators.required, Validators.minLength(6) ] ],
     password_confirm: [ '', [Validators.required, Validators.minLength(6) ] ],
@@ -22,9 +21,8 @@ export class RegisterComponent implements OnInit {
     rol: [ '', [ Validators.required] ]
   });
 
-  constructor( private fb: FormBuilder,
-               private router: Router,
-               private authService: AuthService
+  constructor(private fb: FormBuilder,
+              private authService: AuthService
              ) { }
 
   ngOnInit(): void {
@@ -35,9 +33,9 @@ export class RegisterComponent implements OnInit {
     return emailRegex.test(email);
   }
 
-  register(): void {
-
-    const { name, email, password, password_confirm, rol } = this.myFormRegister.value;
+  addUser() {
+    console.log('addUser');
+    const { name, email, password, password_confirm, rol } = this.myFormUserAdd.value;
     this._showmsg = true;
 
     // validamos el email
@@ -55,16 +53,15 @@ export class RegisterComponent implements OnInit {
     }
 
     this.authService.register( name, email, password, rol )
-    .subscribe( resp => {
-      this._showmsg = false;
-      if( resp === 'OK' ) {
-        Swal.fire( 'Informacion', 'Se ha registrado con exito!', 'info' );
-        this.myFormRegister.reset();
-      } else {
-        Swal.fire( 'Error', resp, 'error' );
-      }
+      .subscribe( resp => {
+        this._showmsg = false;
+        if( resp === 'OK' ) {
+          Swal.fire( 'Informacion', 'Se ha registrado con exito!', 'info' );
+          this.myFormUserAdd.reset();
+        } else {
+          Swal.fire( 'Error', resp, 'error' );
+        }
     });
-
   }
 
   get showmsg(): boolean {

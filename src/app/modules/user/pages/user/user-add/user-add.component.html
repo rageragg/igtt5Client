@@ -1,0 +1,68 @@
+<mat-dialog-content class="mat-typography">
+  <mat-card>
+    <mat-card-title color="primary">Agregar de Usuario</mat-card-title>
+    <mat-card-content>
+      <form autocomplete="off"
+          [formGroup]="myFormUserAdd"
+          (ngSubmit)="addUser()">
+        <mat-form-field>
+            <input type="text"
+                   matInput
+                   formControlName="name"
+                   placeholder="Ingrese su nombre">
+        </mat-form-field>
+        <mat-form-field>
+            <input type="email"
+                   matInput
+                   formControlName="email"
+                   placeholder="Ingrese su email">
+        </mat-form-field>
+        <mat-form-field>
+          <input type="password"
+                  matInput
+                  formControlName="password"
+                  placeholder="Ingrese su clave">
+        </mat-form-field>
+        <mat-form-field>
+          <input type="password"
+                  matInput
+                  formControlName="password_confirm"
+                  placeholder="Confirme su clave">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Elija una Opcion</mat-label>
+          <mat-select formControlName="rol" matInput>
+            <mat-option value="GUEST">Invitado</mat-option>
+            <mat-option value="LOGISTIC">Logistica</mat-option>
+            <mat-option value="BUSSINE">Facturacion</mat-option>
+            <mat-option value="EMPLOYEE">Nomina</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="button">
+          <button type="submit"
+                  color="primary"
+                  mat-raised-button
+                  [disabled]="!myFormUserAdd.valid">
+            Registrese
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  <div class="alert alert-info mt-2"
+     role="alert"
+     *ngIf="showmsg">
+    <mat-progress-bar
+          [mode]="'indeterminate'">
+    </mat-progress-bar>
+    Conectando...!
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button
+          [mat-dialog-close]="true"
+          cdkFocusInitial>
+    Terminar
+  </button>
+</mat-dialog-actions>
