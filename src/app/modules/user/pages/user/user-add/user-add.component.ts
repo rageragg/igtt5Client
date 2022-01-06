@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 
-import { AuthService } from 'src/app/modules/auth/services/auth.service';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-user-add',
@@ -22,7 +22,7 @@ export class UserAddComponent implements OnInit {
   });
 
   constructor(private fb: FormBuilder,
-              private authService: AuthService
+              private userService: UserService
              ) { }
 
   ngOnInit(): void {
@@ -52,7 +52,7 @@ export class UserAddComponent implements OnInit {
       return;
     }
 
-    this.authService.register( name, email, password, rol )
+    this.userService.add( name, email, password, rol )
       .subscribe( resp => {
         this._showmsg = false;
         if( resp === 'OK' ) {

@@ -1,0 +1,51 @@
+<mat-dialog-content class="mat-typography">
+  <mat-card>
+    <mat-card-title color="primary">Eliminacion de Usuario</mat-card-title>
+    <mat-card-subtitle>Se hara una eliminacion logica, marcado el registro con NO VALIDO!</mat-card-subtitle>
+    <mat-card-content class="mat-typography">
+
+      <table>
+        <tr>
+          <td>ID de Usuario: </td>
+          <td><strong>{{ data.id }}</strong></td>
+        </tr>
+        <tr>
+          <td>Nombre de Usuario: </td>
+          <td><strong>{{ data.name }}</strong></td>
+        </tr>
+        <tr>
+          <td>Email de Usuario: </td>
+          <td><strong>{{ data.email }}</strong></td>
+        </tr>
+        <tr>
+          <td>Rol de Usuario: </td>
+          <td><strong>{{ data.rol }}</strong></td>
+        </tr>
+        <tr>
+          <td>Valido: </td>
+          <td><strong>{{ data.valid }}</strong></td>
+        </tr>
+        <tr>
+          <td>Fecha de Creacion: </td>
+          <td><strong>{{ data.createdAt | date:'dd-MM-yyyy'  }}</strong></td>
+        </tr>
+        <tr>
+          <td>Fecha de Actualizacion: </td>
+          <td><strong>{{ data.updatedAt | date:'dd-MM-yyyy'  }}</strong></td>
+        </tr>
+      </table>
+
+    </mat-card-content>
+  </mat-card>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button
+          [mat-dialog-close]="true" cdkFocusInitial
+          color="primary"
+          mat-raised-button
+          (click)="delete()"
+          >
+      Eliminar
+  </button>
+</mat-dialog-actions>

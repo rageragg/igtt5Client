@@ -1,16 +1,18 @@
 import { Component, ViewChild, OnInit, AfterViewInit, AfterViewChecked, OnDestroy } from '@angular/core';
 
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
-import { merge } from 'rxjs';
-import { catchError, map, startWith, switchMap } from "rxjs/operators";
+import { map } from "rxjs/operators";
 
 import { UserService } from '../../../services/user.service';
+import { userData } from '../../../interfaces/iuser-admin.interface';
 
 import { UserAddComponent } from '../user-add/user-add.component';
-import { userData } from '../../../interfaces/iuser-admin.interface';
+import { UserEditComponent } from '../user-edit/user-edit.component';
+import { UserInfoComponent } from '../user-info/user-info.component';
+import { UserDeleteComponent } from '../user-delete/user-delete.component';
 
 
 @Component({
@@ -28,6 +30,7 @@ export class UserListComponent implements OnInit, AfterViewInit, AfterViewChecke
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatTable) table!: MatTable<any>;
 
   get displayedColumns(): string[] {
     return [...this._displayedColumns];
@@ -53,6 +56,7 @@ export class UserListComponent implements OnInit, AfterViewInit, AfterViewChecke
       this._dataSource.paginator = this.paginator;
     }
     this._dataSource.sort = this.sort;
+    this.loading = true;
 
   }
 
@@ -62,11 +66,12 @@ export class UserListComponent implements OnInit, AfterViewInit, AfterViewChecke
 
   refreshData() {
 
+    this.loading = true;
+
     this.userService
         .allUsers()
         .pipe(
             map( ( { data } ) => {
-                this.loading = true;
                 this._userdata = [];
                 data.forEach( element => {
                     const user: userData = {
@@ -91,6 +96,7 @@ export class UserListComponent implements OnInit, AfterViewInit, AfterViewChecke
           this._userdata = resp;
           this.lengthData = this._userdata.length;
           this._dataSource.data = this._userdata;
+          this.table.renderRows();
         });
 
   }
@@ -117,16 +123,77 @@ export class UserListComponent implements OnInit, AfterViewInit, AfterViewChecke
 
   }
 
-  editUser( id: number ): void {
-    console.log('EditUser', id);
+  editUser( row: userData ): void {
+    console.log('EditUser', row);
+    const dialogRef = this.dialog.open(UserEditComponent, {
+      data: {
+        id: row.id,
+        name: row.name,
+        email: row.email,
+        rol: row.rol,
+        valid: row.valid
+      }
+    });
+
+    dialogRef.afterClosed().subscribe( result => {
+      if(result === true) {
+        this.refreshData();
+      };
+    });
+
   }
 
-  deleteUser( id: number): void {
-    console.log('deleteUser ', id );
+  deleteUser( row: userData  ): void {
+
+    const dialogRef = this.dialog.open(UserDeleteComponent, {
+      data: {
+        id: row.id,
+        name: row.name,
+        email: row.email,
+        rol: row.rol,
+        valid: row.valid,
+        emailVerifiedAt: row.emailVerifiedAt,
+        uuid: row.uuid,
+        updatedAt: row.updatedAt,
+        createdAt: row.createdAt
+      }
+    });
+
+    dialogRef.afterClosed().subscribe( result => {
+
+      console.log(result);
+
+      if(result === true) {
+        this.refreshData();
+      };
+
+    });
+
   }
 
-  infoUser( id: number): void {
-    console.log('inforUser ', id );
+  infoUser( row: userData ): void {
+    console.log('inforUser ', row );
+
+    const dialogRef = this.dialog.open(UserInfoComponent, {
+      data: {
+        id: row.id,
+        name: row.name,
+        email: row.email,
+        rol: row.rol,
+        valid: row.valid,
+        emailVerifiedAt: row.emailVerifiedAt,
+        uuid: row.uuid,
+        updatedAt: row.updatedAt,
+        createdAt: row.createdAt
+      }
+    });
+
+    dialogRef.afterClosed().subscribe( result => {
+      if(result === true) {
+        this.refreshData();
+      };
+    });
+
   }
 
   hideLoader() {

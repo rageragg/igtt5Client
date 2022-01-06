@@ -4,6 +4,10 @@ export interface UsersList {
   data:  UserPayload[];
 }
 
+export interface User {
+  data: UserPayload;
+}
+
 export interface UserPayload {
   type:       string;
   id:         string;
@@ -22,6 +26,7 @@ export interface Attributes {
   emailVerifiedAt: Date;
   createdAt:       Date;
   updatedAt:       Date;
+  device_id?:      string;
 }
 
 export interface DatumLinks {

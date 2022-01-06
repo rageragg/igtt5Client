@@ -1,5 +1,6 @@
 <h3 class="text-primary mt-1">Administracion de Usuario</h3>
 <hr>
+
 <div class="user-list-container mat-elevation-z8">
   <mat-form-field appearance="standard" class="user-list-search">
     <mat-label>Buscar</mat-label>
@@ -39,18 +40,28 @@
     <!-- actions -->
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef>
-        <button mat-icon-button color="primary" (click)="newUser()">
+        <button mat-icon-button color="primary"
+                matTooltip="Agregar Usuario"
+                (click)="newUser()">
           <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
         </button>
       </mat-header-cell>
       <mat-cell *matCellDef="let row; let i=index;">
-        <button mat-icon-button color="primary" (click)="editUser(row.id)">
+        <button mat-icon-button
+                matTooltip="Editar Usuario"
+                color="primary"
+                (click)="editUser(row)"
+                [disabled]="row.rol === 'ADMINISTRATOR'">
           <mat-icon aria-label="Edit">edit</mat-icon>
         </button>
-        <button mat-icon-button color="primary" (click)="infoUser(row.id)">
+        <button mat-icon-button color="primary" (click)="infoUser(row)">
           <mat-icon aria-label="Edit">info</mat-icon>
         </button>
-        <button mat-icon-button color="accent" (click)="deleteUser(row.id)">
+        <button mat-icon-button
+                matTooltip="Eliminar Usuario"
+                color="accent"
+                (click)="deleteUser(row)"
+                [disabled]="row.rol === 'ADMINISTRATOR'">
           <mat-icon aria-label="Delete">delete</mat-icon>
         </button>
       </mat-cell>

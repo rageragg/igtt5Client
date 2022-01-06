@@ -12,6 +12,9 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ManualComponent } from './pages/manual/manual.component';
 import { UserAddComponent } from './pages/user/user-add/user-add.component';
 import { TableSampleComponent } from './components/table-sample/table-sample.component';
+import { UserEditComponent } from './pages/user/user-edit/user-edit.component';
+import { UserInfoComponent } from './pages/user/user-info/user-info.component';
+import { UserDeleteComponent } from './pages/user/user-delete/user-delete.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +24,10 @@ import { TableSampleComponent } from './components/table-sample/table-sample.com
     DashboardComponent,
     ManualComponent,
     UserAddComponent,
-    TableSampleComponent
+    TableSampleComponent,
+    UserEditComponent,
+    UserInfoComponent,
+    UserDeleteComponent
   ],
   imports: [
     CommonModule,
