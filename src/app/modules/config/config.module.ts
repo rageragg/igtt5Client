@@ -8,6 +8,8 @@ import { CurrencyComponent } from './pages/currency/currency.component';
 import { ListComponent } from './pages/list/list.component';
 import { RolsComponent } from './pages/rols/rols.component';
 import { NavbarConfigComponent } from './components/navbar-config/navbar-config.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { ManualComponent } from './pages/manual/manual.component';
 
 
 @NgModule({
@@ -17,7 +19,9 @@ import { NavbarConfigComponent } from './components/navbar-config/navbar-config.
     CurrencyComponent,
     ListComponent,
     RolsComponent,
-    NavbarConfigComponent
+    NavbarConfigComponent,
+    DashboardComponent,
+    ManualComponent
   ],
   imports: [
     CommonModule,

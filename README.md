@@ -17,6 +17,7 @@ de conductores, asi como asistencia estadistica y de costos de operaciones
 
 Esta aplicativo `igtt5Clien` es un componente del sistema iGTT5, desarrollado con el marco de trabajo Angular 11.2.7, asi como tambien
 con el marco Laraver para la API
-ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-
+## Servidores
+- Servidor de API `https//rageca.com.ve/igtt5api`
+- Servidor de Cliente `https//rageca.com.ve/igtt5client`
