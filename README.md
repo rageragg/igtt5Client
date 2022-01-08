@@ -1,28 +1,22 @@
-# Igtt5Client
+# Igtt5Client 
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.6.
+Este proyecto fue generado por angular CLI version 11.2.6
 
-## Development server
+Aplicativo Cliente para la gestion de transporte perrestre pesado, documenta y procesa las operaciones de logistica, facturacion y nomina
+de conductores, asi como asistencia estadistica y de costos de operaciones 
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+### Modulos
+- Configuracion, tiene el dominio de las configuraciones generales para todo el aplicativo
+- Geografico, encargado para las definiciones de la estructura geoespacial, como son las formaciones geopoliticas de los paises y rutas.
+- Logistico, este modulo es responsable de documentar, controlar y procesar los servicios de fletes de las operaciones de la empresa de transporte
+- Facturacion
+- Nomina a conductores
+- Estadisticas e Indicadores
 
-## Code scaffolding
+## Desarrollo
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Esta aplicativo `igtt5Clien` es un componente del sistema iGTT5, desarrollado con el marco de trabajo Angular 11.2.7, asi como tambien
+con el marco Laraver para la API
+ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
-Prueba GIT, otra prueba
