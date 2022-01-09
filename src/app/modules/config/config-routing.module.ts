@@ -6,7 +6,7 @@ import { MainComponent } from './pages/main/main.component';
 import { ConfigComponent } from './pages/config/config.component';
 import { CurrencyComponent } from './pages/currency/currency.component';
 import { ListComponent } from './pages/list/list.component';
-import { ManualComponent } from '../user/pages/manual/manual.component';
+import { ManualComponent } from './pages/manual/manual.component';
 
 const routes: Routes = [
   {

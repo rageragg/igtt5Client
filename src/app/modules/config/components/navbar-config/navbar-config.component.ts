@@ -12,11 +12,11 @@ export class NavbarConfigComponent implements OnInit {
   @Input() userRol: string | undefined = '';
 
   public _listMainMenu = [
-    {  id: 1, title: 'Home', link: '/home', show: true },
-    {  id: 2, title: 'Dashboard', link: '/config/dashboard', show: true },
-    {  id: 3, title: 'Configuracion', link: '/config/config', show: true },
-    {  id: 4, title: 'Monedas', link: '/config/currency', show: true },
-    {  id: 5, title: 'Manual', link: '/user/manual', show: true }
+    {  id: 1, title: 'Home', link: '/home', show: false },
+    {  id: 2, title: 'Dashboard', link: '/config/dashboard', show: false },
+    {  id: 3, title: 'Configuracion', link: '/config/config', show: false },
+    {  id: 4, title: 'Monedas', link: '/config/currency', show: false },
+    {  id: 5, title: 'Manual', link: '/config/manual', show: true }
   ];
 
   constructor() { }
@@ -27,11 +27,13 @@ export class NavbarConfigComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges): void {
 
     this._listMainMenu.forEach( x => {
+
       if(x.title != 'Manual' ) {
-        x.show = (this.userName != '');
+        x.show = (this.userRol === 'ADMINISTRATOR');
       }
 
     });
+
   }
 
   ngOnDestroy(): void {
