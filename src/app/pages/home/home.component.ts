@@ -20,12 +20,15 @@ export class HomeComponent implements OnInit, OnDestroy {
              ) { }
 
   ngOnInit(): void {
-    if(this.authService.token) {
+
+    if( this.authService.token ) {
       this.authService.apiToken( this.authService.token )
         .subscribe( resp => {
           if( resp != 'OK' ) {
             this.router.navigateByUrl('/auth/login');
           }
+        }, error => {
+          console.log(error);
         });
     } else {
       this.router.navigateByUrl('/auth/login');

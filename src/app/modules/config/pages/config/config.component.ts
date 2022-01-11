@@ -176,7 +176,7 @@ export class ConfigComponent implements OnInit, AfterViewInit {
 
   subcriberChangeValues(): void {
 
-      this.myFormConfigEdit.get('days_per_year')?.valueChanges
+    this.myFormConfigEdit.get('days_per_year')?.valueChanges
         .subscribe(
           resp => {
             this.dataConfig.data.attributes.days_per_year = resp;
@@ -205,8 +205,6 @@ export class ConfigComponent implements OnInit, AfterViewInit {
           resp => {
             this.dataConfig.data.attributes.months_per_year = resp;
         });
-
-
 
   }
 

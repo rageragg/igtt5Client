@@ -67,12 +67,12 @@ export class AuthService {
     return this.http.post<IUserData>( url, body )
                .pipe(
                   tap( resp => {
-
                     if( resp.data ) {
                       this.setUserInfo( resp.data );
                     }
                   }),
                   map( resp => {
+                    console.log(resp);
                     if( resp.data  ) {
                       return 'OK'
                     } else {
@@ -81,7 +81,6 @@ export class AuthService {
                   }),
                   catchError( resp => {
                     let msg: string = '';
-
                     if(resp.error) {
                       if(resp.error.errors.length > 0 ) {
                         msg = resp.error.errors[0]!.title;
@@ -124,6 +123,7 @@ export class AuthService {
                     }
                   }),
                   map( resp => {
+
                     if( resp.data  ) {
                       return 'OK'
                     } else {
@@ -131,6 +131,7 @@ export class AuthService {
                     }
                   }),
                   catchError( resp => {
+
                     let msg: string = '';
 
                     if(resp.error) {
@@ -210,8 +211,6 @@ export class AuthService {
         'Authorization': `Bearer ${ this._user.apiToken! }`
       })
     };
-
-    console.log( this._user );
 
     return this.http.get<IApiJListUser>( url, httpOptions )
     .pipe(
