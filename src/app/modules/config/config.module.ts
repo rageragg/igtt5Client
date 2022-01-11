@@ -16,6 +16,7 @@ import { RolsComponent } from './pages/rols/rols.component';
 import { NavbarConfigComponent } from './components/navbar-config/navbar-config.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ManualComponent } from './pages/manual/manual.component';
+import { ConfigCalcsComponent } from './components/config-calcs/config-calcs.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { ManualComponent } from './pages/manual/manual.component';
     RolsComponent,
     NavbarConfigComponent,
     DashboardComponent,
-    ManualComponent
+    ManualComponent,
+    ConfigCalcsComponent
   ],
   imports: [
     CommonModule,

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { map } from 'rxjs/operators';
 import Swal from 'sweetalert2';
@@ -12,7 +12,7 @@ import { CountriesList } from '../../interfaces/countries.interface';
   templateUrl: './config.component.html',
   styleUrls: ['./config.component.css']
 })
-export class ConfigComponent implements OnInit {
+export class ConfigComponent implements OnInit, AfterViewInit {
 
   dataConfig!: ConfigurationItem;
   dataCountries!: CountriesList;
@@ -21,18 +21,18 @@ export class ConfigComponent implements OnInit {
   loading: boolean = true;
   messageProgress: string = '';
 
+  public daysPerYear: number = 0;
+
   constructor( private fb: FormBuilder,
                private configService: ConfigService
              ) {
 
-    this.loading = true;
-    this.messageProgress = 'Cargando datos...!';
+    this.showLoading();
     // lista de paises
     this.configService
       .getListCountries()
       .pipe(
         map( resp => {
-          console.log(resp);
           return resp
         })
       )
@@ -44,7 +44,6 @@ export class ConfigComponent implements OnInit {
       .getListCurrencies()
       .pipe(
         map( resp => {
-          console.log(resp);
           return resp
         })
       )
@@ -72,6 +71,10 @@ export class ConfigComponent implements OnInit {
 
   }
 
+  ngAfterViewInit(): void {
+
+  }
+
   ngOnInit(): void {
 
     this.configService
@@ -83,32 +86,18 @@ export class ConfigComponent implements OnInit {
         )
         .subscribe( resp => {
           this.dataConfig = resp;
-          this.myFormConfigEdit.get('company_address')!.setValue(this.dataConfig.data.attributes.company_address);
-          this.myFormConfigEdit.get('company_description')!.setValue(this.dataConfig.data.attributes.company_description);
-          this.myFormConfigEdit.get('company_email')!.setValue(this.dataConfig.data.attributes.company_email);
-          this.myFormConfigEdit.get('company_fiscal_document_co')!.setValue(this.dataConfig.data.attributes.company_fiscal_document_co);
-          this.myFormConfigEdit.get('company_telephone_co')!.setValue(this.dataConfig.data.attributes.company_telephone_co);
-          this.myFormConfigEdit.get('countryCo')!.setValue(this.dataConfig.data.attributes.countryCo);
-          this.myFormConfigEdit.get('localCurrencyCo')!.setValue(this.dataConfig.data.attributes.localCurrencyCo);
-          this.myFormConfigEdit.get('foreignCurrencyCo')!.setValue(this.dataConfig.data.attributes.foreignCurrencyCo);
-          this.myFormConfigEdit.get('lastForeignCurrencyQuoteValue')!.setValue(this.dataConfig.data.attributes.lastForeignCurrencyQuoteValue);
-          this.myFormConfigEdit.get('days_per_year')!.setValue(this.dataConfig.data.attributes.days_per_year);
-          this.myFormConfigEdit.get('weeks_per_year')!.setValue(this.dataConfig.data.attributes.weeks_per_year);
-          this.myFormConfigEdit.get('months_per_year')!.setValue(this.dataConfig.data.attributes.months_per_year);
-          this.myFormConfigEdit.get('days_per_month')!.setValue(this.dataConfig.data.attributes.days_per_month);
-          this.myFormConfigEdit.get('days_per_week')!.setValue(this.dataConfig.data.attributes.days_per_week);
-          this.myFormConfigEdit.get('hours_per_day')!.setValue(this.dataConfig.data.attributes.hours_per_day);
-          this.loading = false;
-          this.messageProgress = '';
+          this.updateForms();
+          this.hideLoading();
         });
+
+    this.subcriberChangeValues();
 
   }
 
   editConfig() {
 
 
-    this.loading = true;
-    this.messageProgress = 'Actualizando...!';
+    this.showUpdating();
     const { company_address, company_description, company_email, company_fiscal_document_co,
             company_telephone_co, countryCo, localCurrencyCo, foreignCurrencyCo, lastForeignCurrencyQuoteValue,
             days_per_year, weeks_per_year, months_per_year, days_per_month, days_per_week, hours_per_day
@@ -135,18 +124,81 @@ export class ConfigComponent implements OnInit {
       updatedAt:                     this.dataConfig.data.attributes.updatedAt
     }
 
-    console.log(this.dataConfig);
-
     this.configService.edit( this.dataConfig )
     .subscribe( resp => {
-      this.loading = false;
-      this.messageProgress = '';
+      this.hideUpdating();
       if( resp === 'OK' ) {
         Swal.fire( 'Informacion', 'Se ha actualizado con exito!', 'info' );
       } else {
         Swal.fire( 'Error', resp, 'error' );
       }
     });
+
+  }
+
+  updateForms(): void {
+    this.myFormConfigEdit.get('company_address')!.setValue(this.dataConfig.data.attributes.company_address);
+    this.myFormConfigEdit.get('company_description')!.setValue(this.dataConfig.data.attributes.company_description);
+    this.myFormConfigEdit.get('company_email')!.setValue(this.dataConfig.data.attributes.company_email);
+    this.myFormConfigEdit.get('company_fiscal_document_co')!.setValue(this.dataConfig.data.attributes.company_fiscal_document_co);
+    this.myFormConfigEdit.get('company_telephone_co')!.setValue(this.dataConfig.data.attributes.company_telephone_co);
+    this.myFormConfigEdit.get('countryCo')!.setValue(this.dataConfig.data.attributes.countryCo);
+    this.myFormConfigEdit.get('localCurrencyCo')!.setValue(this.dataConfig.data.attributes.localCurrencyCo);
+    this.myFormConfigEdit.get('foreignCurrencyCo')!.setValue(this.dataConfig.data.attributes.foreignCurrencyCo);
+    this.myFormConfigEdit.get('lastForeignCurrencyQuoteValue')!.setValue(this.dataConfig.data.attributes.lastForeignCurrencyQuoteValue);
+    this.myFormConfigEdit.get('days_per_year')!.setValue(this.dataConfig.data.attributes.days_per_year);
+    this.myFormConfigEdit.get('weeks_per_year')!.setValue(this.dataConfig.data.attributes.weeks_per_year);
+    this.myFormConfigEdit.get('months_per_year')!.setValue(this.dataConfig.data.attributes.months_per_year);
+    this.myFormConfigEdit.get('days_per_month')!.setValue(this.dataConfig.data.attributes.days_per_month);
+    this.myFormConfigEdit.get('days_per_week')!.setValue(this.dataConfig.data.attributes.days_per_week);
+    this.myFormConfigEdit.get('hours_per_day')!.setValue(this.dataConfig.data.attributes.hours_per_day);
+  }
+
+  showLoading(): void {
+    this.loading = true;
+    this.messageProgress = 'Cargando datos...!';
+  }
+
+  hideLoading(): void {
+    this.loading = false;
+    this.messageProgress = '';
+  }
+
+  showUpdating(): void {
+    this.loading = true;
+    this.messageProgress = 'Actualizando...!';
+  }
+
+  hideUpdating(): void {
+    this.loading = false;
+    this.messageProgress = '';
+  }
+
+  subcriberChangeValues(): void {
+
+      this.myFormConfigEdit.get('days_per_year')?.valueChanges
+        .subscribe(
+          resp => {
+            this.dataConfig.data.attributes.days_per_year = resp;
+        });
+
+    this.myFormConfigEdit.get('days_per_month')?.valueChanges
+        .subscribe(
+          resp => {
+            this.dataConfig.data.attributes.days_per_month = resp;
+        });
+
+    this.myFormConfigEdit.get('days_per_week')?.valueChanges
+        .subscribe(
+          resp => {
+            this.dataConfig.data.attributes.days_per_week = resp;
+        });
+
+    this.myFormConfigEdit.get('hours_per_day')?.valueChanges
+        .subscribe(
+          resp => {
+            this.dataConfig.data.attributes.hours_per_day = resp;
+        });
 
   }
 

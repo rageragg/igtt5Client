@@ -162,3 +162,11 @@
   {{ messageProgress }}
 </div>
 
+<app-config-calcs
+     [daysPerYear]="dataConfig.data.attributes.days_per_year"
+     [hoursPerDay]="dataConfig.data.attributes.hours_per_day"
+     [daysPerMonths]="dataConfig.data.attributes.days_per_month"
+     [daysPerWeeks]="dataConfig.data.attributes.days_per_week"
+     *ngIf="!loading">
+</app-config-calcs>
+
