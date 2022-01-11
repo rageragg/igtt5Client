@@ -10,6 +10,7 @@ import { CarouselHomeComponent } from './component/carousel-home/carousel-home.c
 import { FooterlHomeComponent } from './component/footerl-home/footerl-home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+
 @NgModule({
   declarations: [
     AppComponent,

@@ -12,8 +12,8 @@ import { UserService } from '../../../services/user.service';
 })
 export class UserEditComponent implements OnInit {
 
-   private _showmsg: boolean = false;
-   private _userData = {
+  private _showmsg: boolean = false;
+  private _userData = {
     id: '',
     name: '',
     email: '',
@@ -21,7 +21,7 @@ export class UserEditComponent implements OnInit {
     valid: ''
   }
 
-   myFormUserEdit!: FormGroup;
+  myFormUserEdit!: FormGroup;
 
   constructor(private fb: FormBuilder,
               private userService: UserService,

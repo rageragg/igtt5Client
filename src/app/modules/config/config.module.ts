@@ -1,7 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
+import { MaterialModule } from '../material/material.module';
 import { ConfigRoutingModule } from './config-routing.module';
+import { SharedModule } from '../shared/shared.module';
+
+
+
 import { MainComponent } from './pages/main/main.component';
 import { ConfigComponent } from './pages/config/config.component';
 import { CurrencyComponent } from './pages/currency/currency.component';
@@ -25,7 +31,10 @@ import { ManualComponent } from './pages/manual/manual.component';
   ],
   imports: [
     CommonModule,
-    ConfigRoutingModule
+    ConfigRoutingModule,
+    ReactiveFormsModule,
+    MaterialModule,
+    SharedModule
   ]
 })
 export class ConfigModule { }

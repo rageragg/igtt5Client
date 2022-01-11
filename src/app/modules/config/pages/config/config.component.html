@@ -1,2 +1,164 @@
 <h3 class="text-primary mt-1">Configuracion</h3>
 <hr>
+
+<form autocomplete="off"
+      [formGroup]="myFormConfigEdit"
+      (ngSubmit)="editConfig()"
+      *ngIf="!loading">
+    <div class="row">
+      <!-- Informacion Empresa -->
+      <div class="col-sm-6">
+        <mat-form-field>
+          <input type="text"
+          matInput
+          formControlName="company_address"
+          placeholder="Ingrese la direccion de la empresa">
+        </mat-form-field>
+        <mat-form-field>
+          <input type="text"
+          matInput
+          formControlName="company_description"
+          placeholder="Ingrese la descripcion o nombre de la empresa">
+        </mat-form-field>
+        <mat-form-field>
+          <input type="email"
+          matInput
+          formControlName="company_email"
+          placeholder="Ingrese el email de la empresa">
+        </mat-form-field>
+        <mat-form-field>
+          <input type="text"
+          matInput
+          formControlName="company_fiscal_document_co"
+          placeholder="Ingrese codigo de identificacion fiscal">
+        </mat-form-field>
+        <mat-form-field>
+          <input type="text"
+                 matInput
+                 formControlName="company_telephone_co"
+                 placeholder="Ingrese el telefono de contacto">
+        </mat-form-field>
+      </div>
+
+      <div class="col-sm-6">
+        <mat-form-field>
+          <mat-select placeholder="Pais"
+                      formControlName="countryCo">
+            <mat-option *ngFor="let item of dataCountries.data"
+                        [value]="item.attributes.countryCo">
+              {{item.attributes.description}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="row">
+          <div class="col-xl-4">
+            <mat-form-field>
+              <mat-select placeholder="Moneda Local"
+                          formControlName="localCurrencyCo">
+                <mat-option *ngFor="let item of dataCurrencies"
+                            [value]="item">
+                  {{ item }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-xl-4">
+            <mat-form-field>
+              <mat-select placeholder="Moneda Foranea"
+                          formControlName="foreignCurrencyCo">
+                <mat-option *ngFor="let item of dataCurrencies"
+                            [value]="item">
+                  {{ item }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-xl-4">
+            <mat-form-field class="input-nuber-right">
+              <input type="number"
+                     matInput
+                     appFormatNumber
+                     formControlName="lastForeignCurrencyQuoteValue"
+                     placeholder="Ingrese ultimo valor!">
+            </mat-form-field>
+          </div>
+          <div class="col-xl-4">
+            <mat-form-field class="input-nuber-right">
+              <input type="number"
+                     matInput
+                     appFormatNumber
+                     formControlName="days_per_year"
+                     placeholder="Dias anuales">
+            </mat-form-field>
+          </div>
+          <div class="col-xl-4">
+            <mat-form-field class="input-nuber-right">
+              <input type="number"
+                     matInput
+                     appFormatNumber
+                     formControlName="weeks_per_year"
+                     placeholder="Semanas Anuales">
+            </mat-form-field>
+          </div>
+          <div class="col-xl-4">
+            <mat-form-field class="input-nuber-right">
+              <input type="number"
+                     matInput
+                     appFormatNumber
+                     formControlName="months_per_year"
+                     placeholder="Meses Anuales">
+            </mat-form-field>
+          </div>
+          <div class="col-xl-4">
+            <mat-form-field class="input-nuber-right">
+              <input type="number"
+                     matInput
+                     appFormatNumber
+                     formControlName="days_per_month"
+                     placeholder="Dias por Mes">
+            </mat-form-field>
+          </div>
+          <div class="col-xl-4">
+            <mat-form-field class="input-nuber-right">
+              <input type="number"
+                     matInput
+                     appFormatNumber
+                     formControlName="days_per_week"
+                     placeholder="Dias por Semana">
+            </mat-form-field>
+          </div>
+          <div class="col-xl-4">
+            <mat-form-field class="input-nuber-right">
+              <input type="number"
+                     matInput
+                     appFormatNumber
+                     formControlName="hours_per_day"
+                     placeholder="Horas por Dia">
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <!-- Boton -->
+      <div class="col-sm-12">
+        <div class="button">
+          <button type="submit"
+                  color="primary"
+                  mat-raised-button
+                  [disabled]="!myFormConfigEdit.valid">
+            Actualizar
+          </button>
+        </div>
+      </div>
+  </div>
+</form>
+
+<div class="alert alert-info mt-2"
+     role="alert"
+     *ngIf="loading">
+  <mat-progress-bar
+      [mode]="'indeterminate'">
+  </mat-progress-bar>
+  {{ messageProgress }}
+</div>
+

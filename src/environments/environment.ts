@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://igtt5.api.rageca.com.ve/api/v4'
+  baseUrl: 'http://igtt5.api.rageca.com.ve/api/v4',
+  configurationID: 1
 };
 
 /*
