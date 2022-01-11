@@ -1,5 +1,16 @@
 <h3>Calculos y Valores de Procesos</h3>
 <hr>
-<p>Horas Anuales  : {{ hoursPerYear | number }}</p>
-<p>Horas Mensuales: {{ hoursPerMonth | number }}</p>
-<p>Horas Semanales: {{ hoursPerWeek | number }}</p>
+<table class="table">
+  <tr>
+    <td>Horas Anuales</td>
+    <td>{{ hoursPerYear | number }}</td>
+    <td>Horas Mensuales</td>
+    <td>{{ hoursPerMonth | number }}</td>
+    <td>Horas Semanales</td>
+    <td>{{ hoursPerWeek | number }}</td>
+  </tr>
+  <tr>
+    <td>Eficiencia Uso Horas anuales</td>
+    <td>{{ getUseHrsByYear | percent }}</td>
+  </tr>
+</table>

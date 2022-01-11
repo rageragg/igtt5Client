@@ -200,6 +200,14 @@ export class ConfigComponent implements OnInit, AfterViewInit {
             this.dataConfig.data.attributes.hours_per_day = resp;
         });
 
+    this.myFormConfigEdit.get('months_per_year')?.valueChanges
+        .subscribe(
+          resp => {
+            this.dataConfig.data.attributes.months_per_year = resp;
+        });
+
+
+
   }
 
 }

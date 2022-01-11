@@ -32,4 +32,14 @@ export class ConfigCalcsComponent implements OnInit {
     return this.daysPerWeeks * this.hoursPerDay;
   }
 
+  get getUseHrsByYear(): number {
+
+    if( (this.daysPerYear * this.hoursPerDay) > 0) {
+      return (this.daysPerMonths * this.hoursPerDay * this.monthsPerYear) / (this.daysPerYear * this.hoursPerDay)
+    } else {
+      return 0;
+    }
+
+  }
+
 }
