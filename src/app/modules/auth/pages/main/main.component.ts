@@ -2,9 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 
-import { IUser } from '../../interfaces/iuser.interface';
-
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from 'src/app/service/auth.service';
+import { IUser } from 'src/app/interfaces/iuser.interface';
 
 @Component({
   selector: 'app-main',

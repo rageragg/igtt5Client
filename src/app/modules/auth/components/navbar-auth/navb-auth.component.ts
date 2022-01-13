@@ -1,8 +1,5 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 
-import { IUser } from '../../interfaces/iuser.interface';
-
-import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-navb-auth',

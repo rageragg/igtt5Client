@@ -3,8 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of, BehaviorSubject  } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import { IUserData } from '../interfaces/iuser-data.interface';
-import { IUser, IApiJData, IApiJDataUser, IApiJListUser } from '../interfaces/iuser.interface';
+import { IUserData } from 'src/app/interfaces/iuser-data.interface';
+import { IUser, IApiJData, IApiJDataUser, IApiJListUser } from 'src/app/interfaces/iuser.interface';
 
 import { environment } from 'src/environments/environment';
 
@@ -164,16 +164,9 @@ export class AuthService {
       data: data
     }
 
-    const httpOptions = {
-      headers: new HttpHeaders( {
-        'Content-Type':  'application/vnd.api+json',
-        'Authorization': `Bearer ${ this._user.apiToken! }`
-      })
-    };
-
     // se trata la respuesta en procesos de cascadas, primero
     //  tap, luego map y si hay error catch
-    return this.http.post<IApiJDataUser>( url, body, httpOptions )
+    return this.http.post<IApiJDataUser>( url, body )
                .pipe(
                   map( resp => {
                     if( resp.data  ) {
